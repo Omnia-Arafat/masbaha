@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="masbaha,masba7a, masbaha online">
+    <link rel="stylesheet" href="index.css">
+    <link rel="shortcut icon" href="images.jpg">
+    <title>مسبحه الكترونية</title>
+</head>
+
+
+
+
+
+<body>
+
+
+    <header class="header">
+
+
+        <div class="container" onclick="openlist()">
+            <div class="bar1"></div>
+            <div class="bar2"></div>
+            <div class="bar3"></div>
+        </div>
+        <div class="nav_toggle">
+            <i class="container bx-palette" id="palette-button" onclick="theme()"></i>
+        </div>
+
+        <div class="nav_toggle">
+            <i class="container bx-moon theme_button" id="theme-button"></i>
+        </div>
+
+        <div class="header_title">
+            مسبحة إلكترونية
+        </div>
+
+
+        <div class="nav_toggle">
+            <i class="container" id="nav-toggle" onclick="menu()"></i>
+        </div>
+    </header>
+
+
+    <!-- ******************************************************************************************** -->
+
+
+
+    <nav class="nav_menu" id="nav-menu">
+        <div class="nav_item active">
+            <div class="nav_title" onclick="checked()">أستغفر اللّه</div>
+            <div class="score_lab">0</div>
+        </div>
+        <div class="nav_item">
+            <div class="nav_title" onclick="checked()">سبحان اللّه</div>
+            <div class="score_lab">0</div>
+        </div>
+        <div class="nav_item">
+            <div class="nav_title" onclick="checked()">الحمد للّه</div>
+            <div class="score_lab">0</div>
+        </div>
+        <div class="nav_item">
+            <div class="nav_title" onclick="checked()">اللّه أكبر</div>
+            <div class="score_lab">0</div>
+        </div>
+        <div class="nav_item">
+            <div class="nav_title" onclick="checked()">لا إله إلا اللّه</div>
+            <div class="score_lab">0</div>
+        </div>
+    </nav>
+    <!--===== MAIN =====-->
+    <main class="main" onclick="closeAll()">
+        <br><br><br>
+        <div class="div_score" id="score-lab">10</div>
+
+        <br><br><br>
+
+        <div>
+            <div class="reset_button" id="reset-button" onclick="reset_score()">إعادة</div>
+        </div>
+        <div class="circle_div"></div>
+
+        <br><br><br>
+
+
+        <div class="circle_div mbtn" onclick="incre_score()">
+            <h2 class="title_div" id="title-div">أستغفر اللّه</h2>
+            <img src="">
+        <div class="">فَسَبِّحْ بِحَمْدِ رَبِّكَ<br><br> وَاسْتَغْفِرْهُ</div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@jaames/iro@5"></script>
+
+
+        <script>
+
+
+            // // *------------ SHOW MENU ------------*/
+
+            // const toggleBtn = document.querySelector("#nav-toggle");
+            // const navMenu = document.querySelector("#nav-menu");
+            // function menu() {
+            //     if (divPalette.classList.contains('show')) {
+            //         theme();
+            //     }
+            //     navMenu.classList.toggle('show');
+            //     toggleBtn.classList.toggle('container');
+            //     toggleBtn.classList.toggle('bx-left-arrow-alt');
+            // }
+
+            function openlist() {
+                if (document.getElementById("nav-menu").style.display == "none") {
+
+                    document.getElementById("nav-menu").style.display = "block";
+
+                }
+                else {
+                    document.getElementById("nav-menu").style.display = "none";
+                }
+
+            }
+
+            // function closelist() {
+            // }
+
+
+
+
+            /*------------ COUNTER ------------*/
+            const scoreLab = document.querySelector("#score-lab");
+            const titleDiv = document.querySelector("#title-div");
+            const navItem = document.querySelectorAll(".nav_item");
+            const navTitle = document.querySelectorAll(".nav_title");
+            const scoreNav = document.querySelectorAll(".score_lab");
+            var num = localStorage.getItem('selected-num');
+            var scoreArray = JSON.parse(localStorage.getItem('score-array'));
+
+            if (num === null) {
+                scoreArray = [0, 0, 0, 0, 0];
+                num = 0;
+                localStorage.setItem('selected-num', num);
+                localStorage.setItem('score-array', JSON.stringify(scoreArray));
+                scoreLab.innerHTML = scoreArray[num];
+                titleDiv.innerHTML = navTitle[num].textContent;
+            }
+
+            for (var i = 0; i < navItem.length; i++) {
+                if (scoreArray[i] === null) {
+                    scoreArray[i] = 0;
+                    scoreNav[i].innerHTML = 0;
+                } else {
+                    scoreNav[i].innerHTML = scoreArray[i];
+                }
+            }
+
+            localStorage.setItem('selected-num', num);
+
+            navItem.forEach(n => n.addEventListener("click", function act(n) {
+                var y = this.textContent;
+                for (var i = 0; i < navItem.length; i++) {
+                    var x = navItem[i].textContent;
+                    if (x === y) {
+                        num = i;
+                        menu();
+                        scoreLab.innerHTML = scoreArray[num];
+                        titleDiv.innerHTML = navTitle[num].textContent;
+                        localStorage.setItem('selected-num', num);
+                    }
+                }
+            }));
+
+            /*------------ SHOW SCORE ------------*/
+            const selectedScore = scoreArray[num];
+
+            scoreLab.innerHTML = scoreArray[num];
+            titleDiv.innerHTML = navTitle[num].textContent;
+
+            function incre_score() {
+                const selectedScore = scoreArray[num];
+                var score = selectedScore;
+                score++;
+                scoreLab.innerHTML = score;
+                scoreArray[num] = score;
+                scoreNav[num].innerHTML = score;
+                localStorage.setItem('score-array', JSON.stringify(scoreArray));
+            }
+
+            function reset_score() {
+                score = 0;
+                scoreLab.innerHTML = score;
+                scoreArray[num] = score;
+                scoreNav[num].innerHTML = score;
+                localStorage.setItem('score-array', JSON.stringify(scoreArray));
+            }
+            /*-----------------------------------*/
+            function myFunction(x) {
+                x.classList.toggle("change");
+            }
+            
+            // **********************************************************************************************************
+
+
+
+            let xmain = document.getElementById("title-div");
+            let navvar = document.getElementsByClassName("nav_title");
+            function checked(){
+            let x=document.createElement("p");
+
+            x.textContent=navvar.textContent;
+            xmain.textContent=x.textContent;
+                
+            }
+        </script>
+
+</body>
+
+</html>
